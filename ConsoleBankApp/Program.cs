@@ -1,5 +1,7 @@
 ﻿using System;
 using GB_U_OOP;
+using GB_U_OOP.BankEntities;
+using GB_U_OOP.BankEntities.Base;
 
 namespace ConsoleBankApp
 {
@@ -8,58 +10,64 @@ namespace ConsoleBankApp
         static void Main(string[] args)
         {
             /*
-             * Создать класс счет в банке с закрытыми полями: номер счета, баланс,
-             * тип банковского счета (использовать перечислимый тип).
-             * Предусмотреть методы для доступа к данным – заполнения и чтения.
-             * Создать объект класса, заполнить его поля и вывести информацию об объекте класса на печать
+             *В класс банковский счет, созданный в упражнениях, добавить метод, который переводит деньги с одного счета на другой.
+             * У метода два параметра: ссылка на объект класса банковский счет откуда снимаются деньги, второй параметр – сумма.
              */
-            BankАccountType1 account1 = new BankАccountType1(1, 1000, TypeAccount.FrozenAccount);
-            BankАccountType1 account2 = new BankАccountType1(2, 2000, TypeAccount.FrozenAccount);
+            BankАccount acc1 = new BankАccount(1000);
+            BankАccount acc2 = new BankАccount(500);
+            PrintInfo(acc1);
+            PrintInfo(acc2);
+            Console.WriteLine("================================");//Success
+            MoneyTransfer(acc1, acc2, 100);
 
-            PrintInfo(account1);
-            PrintInfo(account2);
+            Console.WriteLine("================================");//Error
+            MoneyTransfer(acc1, acc2, 901);
+            
 
             /*
-             * Изменить класс счет в банке из упражнения таким образом, чтобы номер счета генерировался сам и был уникальным.
-             * Для этого надо создать в классе статическую переменную и метод, который увеличивает значение этого переменной.
+             * Реализовать метод, который в качестве входного параметра принимает строку
+             * string, возвращает строку типа string, буквы в которой идут в обратном порядке. Протестировать метод.
              */
-            Console.WriteLine("=======================================\n");
-            BankАccountType2 accountTyp2_1 = new BankАccountType2(1000, TypeAccount.FrozenAccount);
-            BankАccountType2 accountTyp2_2 = new BankАccountType2( 2000, TypeAccount.FrozenAccount);
-
-            PrintInfo(accountTyp2_1);
-            PrintInfo(accountTyp2_2);
-
-
-            /*
-             * В классе все методы для заполнения и получения значений полей заменить на свойства. Написать тестовый пример.
-             */
-
-            Console.WriteLine("=======================================\n");
-            BankАccountType3 accountTyp3_1 = new BankАccountType3(1000, TypeAccount.FrozenAccount);
-            BankАccountType3 accountTyp3_2 = new BankАccountType3(2000, TypeAccount.FrozenAccount);
-            BankАccountType3 accountTyp3_3 = new BankАccountType3(3000, TypeAccount.FrozenAccount);
-
-            PrintInfo(accountTyp3_1);
-            PrintInfo(accountTyp3_2);
-            PrintInfo(accountTyp3_3);
+            Console.WriteLine("\n******************************");
+            string testTxt = "string revers";
+            Console.WriteLine(testTxt);
+            Console.WriteLine(ReversString(testTxt));
 
             Console.ReadKey();
         }
 
-        private static void PrintInfo(BankАccountType1 acc)
-        {
-            Console.WriteLine($"Account Id - {acc.GetId()}: \n\t-Money: {acc.GetMoneyInAcc()}$ \n\t-Type account: {acc.GetTypeAccount()}");
-        }
 
-        private static void PrintInfo(BankАccountType2 acc)
-        {
-            Console.WriteLine($"Account Id - {acc.GetId()}: \n\t-Money: {acc.GetMoneyInAcc()}$ \n\t-Type account: {acc.GetTypeAccount()}");
-        }
-
-        private static void PrintInfo(BankАccountType3 acc)
+        private static void PrintInfo(BaseBankАccount acc)
         {
             Console.WriteLine($"Account Id - {acc.Id}: \n\t-Money: {acc.MoneyInAcc}$ \n\t-Type account: {acc.TypeAccount}");
+        }
+
+        private static void MoneyTransfer(BaseBankАccount accOut, BaseBankАccount accTo, decimal transferMoney)
+        {
+
+            if (accOut.MoneyToAnotherAcc(accTo, transferMoney))
+            {
+                Console.WriteLine("---SUCCESS---");
+                PrintInfo(accOut);
+                PrintInfo(accTo);
+            }
+            else
+            {
+                Console.WriteLine("---TRANSFER ERROR---");
+            }
+
+        }
+
+        private static string ReversString(string txt)
+        {
+            string reversTxt = String.Empty;
+
+            for (int i = txt.Length - 1; i >= 0; i--)
+            {
+                reversTxt += txt[i];
+            }
+            return reversTxt;
+
         }
     }
 }
