@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GB_U_OOP;
-using GB_U_OOP.BankEntities;
-using GB_U_OOP.BankEntities.Base;
+using GB_U_OOP.BuilderPattern;
+
 
 namespace ConsoleBankApp
 {
@@ -9,65 +11,30 @@ namespace ConsoleBankApp
     {
         static void Main(string[] args)
         {
-            /*
-             *В класс банковский счет, созданный в упражнениях, добавить метод, который переводит деньги с одного счета на другой.
-             * У метода два параметра: ссылка на объект класса банковский счет откуда снимаются деньги, второй параметр – сумма.
-             */
-            BankАccount acc1 = new BankАccount(1000);
-            BankАccount acc2 = new BankАccount(500);
-            PrintInfo(acc1);
-            PrintInfo(acc2);
-            Console.WriteLine("================================");//Success
-            MoneyTransfer(acc1, acc2, 100);
+            BuilderController controller = new BuilderController();
+            BuildingBuilder builder = new BuildingBuilder();
+            BuildingBuilder builder_2 = new BuildingBuilder();
+            controller.Builder = builder;
+            controller.CreateTypeA();
+            PrintInfo(builder.GetBuilding());
 
-            Console.WriteLine("================================");//Error
-            MoneyTransfer(acc1, acc2, 901);
-            
-
-            /*
-             * Реализовать метод, который в качестве входного параметра принимает строку
-             * string, возвращает строку типа string, буквы в которой идут в обратном порядке. Протестировать метод.
-             */
-            Console.WriteLine("\n******************************");
-            string testTxt = "string revers";
-            Console.WriteLine(testTxt);
-            Console.WriteLine(ReversString(testTxt));
-
+            Console.WriteLine("==================");
+            controller.Builder = builder_2;
+            controller.CreateTypeB();
+            PrintInfo(builder_2.GetBuilding());
             Console.ReadKey();
         }
 
-
-        private static void PrintInfo(BaseBankАccount acc)
+        private static void PrintInfo(Building building)
         {
-            Console.WriteLine($"Account Id - {acc.Id}: \n\t-Money: {acc.MoneyInAcc}$ \n\t-Type account: {acc.TypeAccount}");
+            Console.WriteLine($"Building: {building.Name}; ID: {building.Id};" );
+            Console.WriteLine($"\t-Section count: {building.SectionCount};" );
+            Console.WriteLine($"\t-Max height: {building.MaxHeight};" );
+            Console.WriteLine($"\t-Max level count: {building.MaxLevelCount};" );
+            Console.WriteLine($"\t-Apartment Count: {building.ApartmentCount};" );
         }
-
-        private static void MoneyTransfer(BaseBankАccount accOut, BaseBankАccount accTo, decimal transferMoney)
-        {
-
-            if (accOut.MoneyToAnotherAcc(accTo, transferMoney))
-            {
-                Console.WriteLine("---SUCCESS---");
-                PrintInfo(accOut);
-                PrintInfo(accTo);
-            }
-            else
-            {
-                Console.WriteLine("---TRANSFER ERROR---");
-            }
-
-        }
-
-        private static string ReversString(string txt)
-        {
-            string reversTxt = String.Empty;
-
-            for (int i = txt.Length - 1; i >= 0; i--)
-            {
-                reversTxt += txt[i];
-            }
-            return reversTxt;
-
-        }
+       
     }
+
+   
 }
