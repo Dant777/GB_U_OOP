@@ -7,12 +7,18 @@ namespace ConsoleBankApp
     {
         static void Main(string[] args)
         {
-            RationalNumber a = new RationalNumber(3, 5);
-            RationalNumber b = new RationalNumber(2, 15);
+            BankAccount a = new BankAccount(50000);
+            BankAccount a1 = new BankAccount(50000);
+            BankAccount b = new BankAccount(10000);
 
-           // RationalNumber s = a + b;
-            a++;
+           
             Console.WriteLine(a.ToString());
+            Console.WriteLine(b.ToString());
+            Console.WriteLine(a == b);
+            Console.WriteLine(a != b);
+            Console.WriteLine("======================");
+            Console.WriteLine(a == a1);
+            Console.WriteLine(a != a1);
 
             Console.ReadKey();
         }
