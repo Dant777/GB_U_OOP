@@ -7,21 +7,27 @@ namespace ConsoleBankApp
     {
         static void Main(string[] args)
         {
-            BankAccount a = new BankAccount(50000);
-            BankAccount a1 = new BankAccount(50000);
-            BankAccount b = new BankAccount(10000);
 
-           
-            Console.WriteLine(a.ToString());
-            Console.WriteLine(b.ToString());
-            Console.WriteLine(a == b);
-            Console.WriteLine(a != b);
-            Console.WriteLine("======================");
-            Console.WriteLine(a == a1);
-            Console.WriteLine(a != a1);
+            
+            string txt = "АаБбВв";
+            Console.WriteLine($"==========CoderA=========");
+            ACoder coderA = new ACoder();
+            Console.WriteLine($"Txt: {txt}");
+            string txtEnA = coderA.Encode(txt);
+            Console.WriteLine($"txtEn: {txtEnA}");
+            Console.WriteLine($"txtDec: {coderA.Decode(txtEnA)}");
+            
+            Console.WriteLine($"==========CoderB=========");
+            txt = "АаБбЯяЮю";
+            BCoder coder = new BCoder();
+            Console.WriteLine($"Txt: {txt}");
+            string txtEn = coder.Encode(txt);
+            Console.WriteLine($"txtEn: {txtEn}");
+            Console.WriteLine($"txtDec: {coder.Decode(txtEn)}");
 
             Console.ReadKey();
         }
+
     }
 
 }
